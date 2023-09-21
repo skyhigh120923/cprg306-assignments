@@ -5,10 +5,10 @@ import StudentInfo from './student_info'
 export default function Home() {
   return (
     <main>
-      <h1> CPRG 306: Web Development 2 - Assignments</h1>
+      <h1 style={{ fontSize:55}}>CPRG 306: Web Development 2 - Assignments</h1>
       <StudentInfo></StudentInfo>
-      <Link to="app\week2\page1.js">week2</Link>
+      <Link href="/week2/">week2</Link>
     </main>
-   
+
   )
 }
