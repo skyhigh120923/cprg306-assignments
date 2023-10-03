@@ -5,7 +5,7 @@ export default function StudentInfo(){
         <main>
             <h2> Name : Yuvraj Singh</h2>
             <h2>Course Section : CPRG 306 F</h2>
-            <Link href="https://github.com/skyhigh120923/cprg306-assignments">Github_Repository</Link>
+            <Link href="https://github.com/skyhigh120923/cprg306-assignments">github_rep</Link>
         </main>
     )
 }
