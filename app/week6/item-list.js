@@ -3,18 +3,18 @@ import Item from './item';
 import './styles.css';
 
 function ItemList({ items }) {
-  // Initialize State Variable (sortBy) if you want to maintain sorting functionality
+  // Initialize State Variable (sortBy) 
   const [sortBy, setSortBy] = useState('name');
 
   // Sort the Items
-  const sortedItems = [...items]; // Create a copy of the items array
+  const sortedItems = [...items]; 
 
   if (sortBy === 'name') {
     sortedItems.sort((a, b) => a.name.localeCompare(b.name));
   } else if (sortBy === 'category') {
     sortedItems.sort((a, b) => a.category.localeCompare(b.category));
   }
- // Create Sort Buttons
+ 
  const isSortByName = sortBy === 'name';
  const isSortByCategory = sortBy === 'category';
 
@@ -51,8 +51,7 @@ function ItemList({ items }) {
      </ul>
    </div>
  );
-  // Rest of the component remains the same
-  // ...
+  
 }
 
 export default ItemList;

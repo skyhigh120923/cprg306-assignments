@@ -1,30 +1,22 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 function NewItem({ onAddItem }) {
-  // Initialize state variables
   const [name, setName] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [category, setCategory] = useState('produce');
 
-  // Create a form submission handler
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Create an item object
-    const newItem = { name, quantity, category };
-
-    // Call the onAddItem prop 
-    onAddItem(newItem);
-
-    // Reset state variables to their initial values
+    const item = { name, quantity, category };
+    onAddItem(item);
     setName('');
     setQuantity(1);
     setCategory('produce');
   };
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        {/* Name Field */}
         <div className="mb-4">
           <label htmlFor="name" className="block text-black font-semibold mb-2">
             Name:
@@ -40,7 +32,6 @@ function NewItem({ onAddItem }) {
           />
         </div>
 
-        {/* Quantity Field */}
         <div className="mb-4">
           <label htmlFor="quantity" className="block text-black font-semibold mb-2">
             Quantity:
@@ -58,7 +49,6 @@ function NewItem({ onAddItem }) {
           />
         </div>
 
-        {/* Category Field */}
         <div className="mb-4">
           <label htmlFor="category" className="block text-black font-semibold mb-2">
             Category:
@@ -84,11 +74,10 @@ function NewItem({ onAddItem }) {
           </select>
         </div>
 
-        {/* Submit Button */}
         <div className="text-center">
           <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-600 text-black font-semibold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="bg-red-500 hover:bg-red-600 text-yellow font-semibold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             Add Item
           </button>
@@ -97,7 +86,5 @@ function NewItem({ onAddItem }) {
     </div>
   );
 }
- 
-
 
 export default NewItem;
