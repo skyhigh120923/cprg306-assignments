@@ -1,0 +1,11 @@
+.sort-button {
+    background-color: lightcoral;
+    padding: 5px 10px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .sort-button.selected {
+    background-color: coral;
+  }
