@@ -1,35 +1,51 @@
 "use client";
 import React, { useState, useEffect } from 'react';
+import { getItems, addItem } from "../../week10/_services/shopping-list-service";
 import Link from 'next/link';
-import itemsData from './items.json';
 import ItemList from './item-list';
 import NewItem from './new-item';
 import MealIdeas from './meal-ideas';
-import { useUserAuth } from 'path/to/useUserAuth'; // Import the useUserAuth hook from the correct path
+import { useUserAuth } from "../_utils/auth-context";
 
 export default function Page() {
-  const [items, setItems] = useState(itemsData);
+  const [items, setItems] = useState([]);
   const [selectedItemName, setSelectedItemName] = useState('');
-  const user = useUserAuth(); // Assuming useUserAuth returns the user object or null
+  const user = useUserAuth();
 
   useEffect(() => {
-    if (user === null) {
-      // Redirect the user to the landing page if not logged in
-      window.location.href = '/'; // Redirect to the landing page URL
-    }
+    const loadItems = async () => {
+      try {
+        if (user) {
+          const items = await getItems(user.uid);
+          setItems(items);
+        }
+      } catch (error) {
+        console.error("Error loading items:", error);
+      }
+    };
+
+    loadItems();
   }, [user]);
 
-  const handleItemSelect = selectedItem => {
-    const cleanedItemName = selectedItem.name.split(',')[0].trim();
+  const handleItemSelect = (selectedItem) => {
+    const cleanedItemName = selectedItem.data.name.split(',')[0].trim();
     setSelectedItemName(cleanedItemName);
   };
 
-  const handleAddItem = newItem => {
-    setItems(prevItems => [...prevItems, newItem]);
+  const handleAddItem = async (newItemName) => {
+    try {
+      if (user) {
+        const newItemId = await addItem(user.uid, { name: newItemName, quantity: 1, category: "other" });
+        const newItem = { id: newItemId, data: { name: newItemName, quantity: 1, category: "other" } };
+        setItems((prevItems) => [...prevItems, newItem]);
+      }
+    } catch (error) {
+      console.error("Error adding item:", error);
+    }
   };
 
   // Render the shopping list page content only if the user is logged in
-  if (user === null) {
+  if (!user) {
     return null; // Render nothing if the user is not logged in
   }
 
@@ -50,14 +66,3 @@ export default function Page() {
     </main>
   );
 }
-import { useUserAuth } from "./_utils/auth-context";
- 
-const { user, gitHubSignIn, firebaseSignOut } = useUserAuth();
- 
-await gitHubSignIn();
- 
-await firebaseSignOut();
- 
-<p>
-  Welcome, {user.displayName} ({user.email})
-</p>;

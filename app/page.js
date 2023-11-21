@@ -12,7 +12,8 @@ export default function Home() {
       <Link href="/week4/">week4</Link> <br></br>
       <Link href="/week5/">week5</Link> <br></br>  
       <Link href="/week6/">week6</Link> <br></br>
-      <Link href="/week7/">week7</Link> 
+      <Link href="/week7/">week7</Link> <br></br>
+      <Link href="/week8/shopping-list/">week8</Link> <br></br>
     </main>
 
   )
