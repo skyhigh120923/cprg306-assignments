@@ -1,26 +1,34 @@
-import { db } from "../../week8/_utils/firebase";
+import { db } from "../_utils/firebase";
 import { collection, getDocs, addDoc, query } from "firebase/firestore";
 
-export const getItems = async (userId) => {
-    const itemsCollection = collection(db, `users/${userId}/items`);
-    const itemsSnapshot = await getDocs(itemsCollection);
-  
-    const items = [];
-  
-    itemsSnapshot.forEach((doc) => {
-      items.push({
-        id: doc.id,
-        data: doc.data(),
-      });
-    });
-  
-    return items;
-  };
+// Function to get items for a user
+export const getItems = async (userID) => {
+  try {
+    const q = query(collection(db, "users", userID, "items"));
+    const querySnapshot = await getDocs(q);
 
-  export const addItem = async (userId, item) => {
-    const itemsCollection = collection(db, `users/${userId}/items`);
-    const newItemRef = await addDoc(itemsCollection, item);
-  
-    return newItemRef.id;
-  };
-  
+    const mappedItems = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    return mappedItems;
+  } catch (error) {
+    console.error("Error fetching items:", error);
+    throw error;
+  }
+};
+
+// Function to add an item for a user
+export const addItem = async (userId, item) => {
+  try {
+    const userItemsRef = collection(db, "users", userId, "items");
+    const itemDoc = await addDoc(userItemsRef, item);
+
+    console.log("Document written with ID: ", itemDoc.id);
+    return itemDoc.id;
+  } catch (error) {
+    console.error("Error adding item:", error);
+    throw error;
+  }
+};
